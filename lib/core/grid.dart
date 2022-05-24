@@ -52,7 +52,7 @@ class Grid {
     List.generate(height!, (y) {
       List<Node> tempX = [];
       List.generate(width!, (x) {
-        Node node = Node(j, i);
+        Node node = Node(x, y);
         node.walkable = true;
         tempX.add(node);
       });
@@ -227,7 +227,7 @@ class Grid {
     List.generate(height!, (y) {
       List<Node> tempX = [];
       List.generate(width!, (x) {
-        tempX.add(Node(j, i, thisNodes[i][j].walkable));
+        tempX.add(Node(y, x, thisNodes[x][y].walkable));
       });
       newNodes.add(tempX);
     });
