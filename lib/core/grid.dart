@@ -49,10 +49,10 @@ class Grid {
 
     List<List<Node>> nodes = List<List<Node>>.from([]);
 
-    List.generate(height!, (y) {
+    List.generate(height!, (i) {
       List<Node> tempX = [];
-      List.generate(width!, (x) {
-        Node node = Node(x, y);
+      List.generate(width!, (j) {
+        Node node = Node(j, i);
         node.walkable = true;
         tempX.add(node);
       });
@@ -224,10 +224,10 @@ class Grid {
 
     List<List<Node>> newNodes = List<List<Node>>.from([]);
 
-    List.generate(height!, (y) {
+    List.generate(height!, (i) {
       List<Node> tempX = [];
-      List.generate(width!, (x) {
-        tempX.add(Node(y, x, thisNodes[x][y].walkable));
+      List.generate(width!, (j) {
+        tempX.add(Node(i, j, thisNodes[i][j].walkable));
       });
       newNodes.add(tempX);
     });
