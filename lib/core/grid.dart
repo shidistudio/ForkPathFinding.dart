@@ -1,5 +1,7 @@
 library pathfinding.core.grid;
 
+import 'dart:core';
+
 import 'node.dart';
 
 /**
@@ -43,15 +45,19 @@ class Grid {
    * @see Grid
    */
   _buildNodes(width, height, matrix) {
-    var i, j, nodes = [], row;
+    var i, j, row;
 
-    for (i = 0; i < height; ++i) {
-      nodes[i] = [];
-      for (j = 0; j < width; ++j) {
-        nodes[i][j] = new Node(j, i);
-        nodes[i][j].walkable = true;
-      }
-    }
+    List<List<Node>> nodes = List<List<Node>>.from([]);
+
+    List.generate(height!, (y) {
+      List<Node> tempX = [];
+      List.generate(width!, (x) {
+        Node node = Node(j, i);
+        node.walkable = true;
+        tempX.add(node);
+      });
+      nodes.add(tempX);
+    });
 
     if (matrix == null) {
       return nodes;
@@ -214,15 +220,17 @@ class Grid {
         height = this.height,
         thisNodes = this.nodes,
         newGrid = new Grid(width, height),
-        newNodes = [],
         row;
 
-    for (i = 0; i < height; ++i) {
-      newNodes[i] = [];
-      for (j = 0; j < width; ++j) {
-        newNodes[i][j] = new Node(j, i, thisNodes[i][j].walkable);
-      }
-    }
+    List<List<Node>> newNodes = List<List<Node>>.from([]);
+
+    List.generate(height!, (y) {
+      List<Node> tempX = [];
+      List.generate(width!, (x) {
+        tempX.add(Node(j, i, thisNodes[i][j].walkable));
+      });
+      newNodes.add(tempX);
+    });
 
     newGrid.nodes = newNodes;
 
