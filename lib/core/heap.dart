@@ -20,7 +20,7 @@ int defaultCmp(x, y) {
  * Optional args lo (default 0) and hi (default a.length) bound the slice
  * of a to be searched.
  */
-_insort(List a, x, int lo, int hi, dynamic cmp) {
+_insort(List a, x, int lo, int? hi, dynamic cmp) {
   var mid;
   if (lo == null) {
     lo = 0;
@@ -35,7 +35,7 @@ _insort(List a, x, int lo, int hi, dynamic cmp) {
     hi = a.length;
   }
   while (cmp(lo, hi) < 0) {
-    mid = ((lo + hi) / 2).floor();
+    mid = ((lo + hi!) / 2).floor();
     if (cmp(x, a[mid]) < 0) {
       hi = mid;
     } else {
@@ -123,7 +123,8 @@ _heapify(array, cmp) {
   }
   _results1 = [];
   for (var _j = 0, _ref = (array.length / 2).floor();
-      0 <= _ref ? _j < _ref : _j > _ref; 0 <= _ref ? _j++ : _j--){
+      0 <= _ref ? _j < _ref : _j > _ref;
+      0 <= _ref ? _j++ : _j--) {
     _results1.push(_j);
   }
   _ref1 = _results1.reverse();
@@ -201,7 +202,9 @@ _nsmallest(array, n, cmp) {
   _heapify(array, cmp);
   _results = [];
   i = _j = 0;
-  for (_ref1 = min<num>(n, array.length); 0 <= _ref1 ? _j < _ref1 : _j > _ref1; i = 0 <= _ref1 ? ++_j : --_j) {
+  for (_ref1 = min<num>(n, array.length);
+      0 <= _ref1 ? _j < _ref1 : _j > _ref1;
+      i = 0 <= _ref1 ? ++_j : --_j) {
     _results.push(_heappop(array, cmp));
   }
   return _results;
@@ -250,7 +253,7 @@ _siftup(array, pos, cmp) {
 
 class Heap {
   dynamic cmp;
-  List nodes;
+  List? nodes;
 
   Heap([cmp]) {
     this.cmp = cmp != null ? cmp : defaultCmp;
@@ -258,7 +261,7 @@ class Heap {
   }
 
   push(x) {
-    return _heappush(this.nodes, x, this.cmp);
+    return _heappush(this.nodes!, x, this.cmp);
   }
 
   insert(x) {
@@ -272,14 +275,14 @@ class Heap {
   remove() => pop();
 
   peek() {
-    return this.nodes[0];
+    return this.nodes![0];
   }
 
   top() => peek();
   front() => peek();
 
   contains(x) {
-    return this.nodes.indexOf(x) != -1;
+    return this.nodes!.indexOf(x) != -1;
   }
 
   has(x) => contains(x);
@@ -305,23 +308,23 @@ class Heap {
   }
 
   empty() {
-    return this.nodes.length == 0;
+    return this.nodes!.length == 0;
   }
 
   size() {
-    return this.nodes.length;
+    return this.nodes!.length;
   }
 
   clone() {
     var heap;
     heap = new Heap(this.cmp);
-    heap.nodes = new List.from(this.nodes);
+    heap.nodes = new List.from(this.nodes!);
     return heap;
   }
 
   copy() => clone();
 
   toArray() {
-    return new List.from(this.nodes);
+    return new List.from(this.nodes!);
   }
 }

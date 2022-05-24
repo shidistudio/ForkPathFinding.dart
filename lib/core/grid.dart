@@ -11,8 +11,8 @@ import 'node.dart';
  *     representing the walkable status of the nodes(0 or false for walkable).
  *     If the matrix is not supplied, all the nodes will be walkable.  */
 class Grid {
-  int width;
-  int height;
+  int? width;
+  int? height;
   var nodes;
 
   Grid(width, height, [matrix]) {
@@ -43,18 +43,15 @@ class Grid {
    * @see Grid
    */
   _buildNodes(width, height, matrix) {
-    var i, j,
-    nodes = new List(height),
-    row;
+    var i, j, nodes = [], row;
 
     for (i = 0; i < height; ++i) {
-      nodes[i] = new List(width);
+      nodes[i] = [];
       for (j = 0; j < width; ++j) {
         nodes[i][j] = new Node(j, i);
         nodes[i][j].walkable = true;
       }
     }
-
 
     if (matrix == null) {
       return nodes;
@@ -77,11 +74,9 @@ class Grid {
     return nodes;
   }
 
-
   Node getNodeAt(x, y) {
     return this.nodes[y][x];
   }
-
 
   /**
    * Determine whether the node at the given position is walkable.
@@ -93,7 +88,6 @@ class Grid {
   bool isWalkableAt(x, y) {
     return this.isInside(x, y) && this.nodes[y][x].walkable;
   }
-
 
   /**
    * Determine whether the position is inside the grid.
@@ -108,7 +102,6 @@ class Grid {
     return (x >= 0 && x < this.width) && (y >= 0 && y < this.height);
   }
 
-
   /**
    * Set whether the node on the given position is walkable.
    * NOTE: throws exception if the coordinate is not inside the grid.
@@ -119,7 +112,6 @@ class Grid {
   setWalkableAt(x, y, walkable) {
     this.nodes[y][x].walkable = walkable;
   }
-
 
   /**
    * Get the neighbors of the given node.
@@ -144,10 +136,14 @@ class Grid {
     var x = node.x,
         y = node.y,
         neighbors = [],
-        s0 = false, d0 = false,
-        s1 = false, d1 = false,
-        s2 = false, d2 = false,
-        s3 = false, d3 = false,
+        s0 = false,
+        d0 = false,
+        s1 = false,
+        d1 = false,
+        s2 = false,
+        d2 = false,
+        s3 = false,
+        d3 = false,
         nodes = this.nodes;
 
     // ↑
@@ -207,24 +203,22 @@ class Grid {
     return neighbors;
   }
 
-
   /**
    * Get a clone of this grid.
    * @return {Grid} Cloned grid.
    */
   clone() {
-    var i, j,
-
-    width = this.width,
-    height = this.height,
-    thisNodes = this.nodes,
-
-    newGrid = new Grid(width, height),
-    newNodes = new List(height),
-    row;
+    var i,
+        j,
+        width = this.width,
+        height = this.height,
+        thisNodes = this.nodes,
+        newGrid = new Grid(width, height),
+        newNodes = [],
+        row;
 
     for (i = 0; i < height; ++i) {
-      newNodes[i] = new List(width);
+      newNodes[i] = [];
       for (j = 0; j < width; ++j) {
         newNodes[i][j] = new Node(j, i, thisNodes[i][j].walkable);
       }
@@ -235,4 +229,3 @@ class Grid {
     return newGrid;
   }
 }
-

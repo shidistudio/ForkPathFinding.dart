@@ -64,8 +64,7 @@ class PathfindingBenchmarkBase extends BenchmarkBase {
   // The benchmark code.
   void run() {
     for (var grid in grids) {
-      finder.findPath(0, 0, grid.width - 1, grid.height - 1, grid.clone());
+      finder.findPath(0, 0, grid.width! - 1, grid.height! - 1, grid.clone());
     }
   }
-
 }

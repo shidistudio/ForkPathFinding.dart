@@ -26,12 +26,12 @@ class Node {
    * Whether this node can be walked through.
    * @type boolean
    */
-  bool walkable;
+  bool? walkable;
 
   // TODO: this is a hack...
-  num g, h, f;
-  bool opened, closed;
-  Node parent;
+  num? g, h, f;
+  bool? opened, closed;
+  Node? parent;
 
   Node(this.x, this.y, [walkable]) {
     this.walkable = (walkable == null ? true : walkable);
